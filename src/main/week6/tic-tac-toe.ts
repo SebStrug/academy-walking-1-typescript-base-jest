@@ -47,6 +47,9 @@ export class TicTacToe {
   }
 
   public play([x, y]: [number, number]): TicTacToe {
+    if (this.winner) {
+      return this;
+    }
     if (this.board[x][y]) {
       return this;
     }
