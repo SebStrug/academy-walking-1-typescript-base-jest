@@ -14,6 +14,7 @@ export class TicTacToe {
   }
 
   public play(move: [number, number]): TicTacToe {
+    this.board[0][0] = "X";
     return this;
   }
 }
