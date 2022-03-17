@@ -75,5 +75,15 @@ describe("TicTacToe", () => {
       .play([2, 2])
       .play([0, 2]);
     expect(res.winner).toEqual("O");
-  });  
+  });
+
+  it("Playing a played position should not affect the game", () => {
+    let sut = new TicTacToe();
+    let res = sut.play([0, 0]).play([0, 0]);
+    expect(res.board).toEqual([
+      ["X", "", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ]);
+  });
 });
