@@ -17,6 +17,7 @@ describe("TicTacToe", () => {
       ["", "", ""],
     ]);
   });
+  
   it("Playing second move gives a O", () => {
     let sut = new TicTacToe();
     expect(sut.play([0, 0]).play([0, 1]).board).toEqual([
