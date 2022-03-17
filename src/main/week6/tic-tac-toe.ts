@@ -18,15 +18,14 @@ export class TicTacToe {
     this.winner = "";
   }
 
-  public play([x, y]: [number, number]): TicTacToe {
-    this.board[x][y] = this.move;
+  private checkWinner(): "" | "X" {
     for (let i = 0; i < 3; i++) {
       if (
         this.board[0][i] == "X" &&
         this.board[1][i] == "X" &&
         this.board[2][i] == "X"
       ) {
-        this.winner = "X";
+        return "X";
       }
 
       if (
@@ -34,9 +33,23 @@ export class TicTacToe {
         this.board[i][1] == "X" &&
         this.board[i][2] == "X"
       ) {
-        this.winner = "X";
+        return "X";
+      }
+
+      if (
+        this.board[i][i] == "X" &&
+        this.board[i][i] == "X" &&
+        this.board[i][i] == "X"
+      ) {
+        return "X";
       }
     }
+    return "";
+  }
+
+  public play([x, y]: [number, number]): TicTacToe {
+    this.board[x][y] = this.move;
+    this.winner = this.checkWinner();
     this.move = this.move === "X" ? "O" : "X";
     return this;
   }

@@ -64,4 +64,16 @@ describe("TicTacToe", () => {
       .play([2, 2]);
     expect(res.winner).toEqual("X");
   });
+
+  it("Playing three Os in a row should result in a win", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play([1, 0])
+      .play([0, 0])
+      .play([1, 1])
+      .play([0, 1])
+      .play([2, 2])
+      .play([0, 2]);
+    expect(res.winner).toEqual("O");
+  });  
 });
