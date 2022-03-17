@@ -4,6 +4,7 @@ export class TicTacToe {
     [string, string, string],
     [string, string, string]
   ];
+  move: "X" | "O";
 
   constructor() {
     this.board = [
@@ -11,10 +12,12 @@ export class TicTacToe {
       ["", "", ""],
       ["", "", ""],
     ];
+    this.move = "X";
   }
 
-  public play(move: [number, number]): TicTacToe {
-    this.board[0][0] = "X";
+  public play([x, y]: [number, number]): TicTacToe {
+    this.board[x][y] = this.move;
+    this.move = this.move === "X" ? "O" : "X";
     return this;
   }
 }

@@ -19,10 +19,27 @@ describe("TicTacToe", () => {
   });
   it("Playing second move gives a O", () => {
     let sut = new TicTacToe();
-    expect(sut.play([0, 0]).play([0, 1])).toEqual([
+    expect(sut.play([0, 0]).play([0, 1]).board).toEqual([
       ["X", "O", ""],
       ["", "", ""],
       ["", "", ""],
     ]);
+  });
+
+  it("Playing third move gives an X", () => {
+    let sut = new TicTacToe();
+    expect(sut.play([0, 0]).play([0, 1]).play([0, 2]).board).toEqual([
+      ["X", "O", "X"],
+      ["", "", ""],
+      ["", "", ""],
+    ]);
+  });
+
+  it("Playing three Xs in a row should result in a win", () => {
+    let sut = new TicTacToe();
+    expect(
+      sut.play([0, 0]).play([0, 1]).play([1, 0]).play([0, 2]).play([2, 0])
+        .winner
+    ).toEqual("X");
   });
 });
