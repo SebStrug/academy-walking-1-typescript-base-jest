@@ -18,7 +18,7 @@ export class TicTacToe {
     this.winner = "";
   }
 
-  private checkWinner(player: "X" | "O"): "" | "X" | "O" {
+  private checkWinner(player: "X" | "O"): "" | "X" | "O" | "D" {
     for (let i = 0; i < 3; i++) {
       if (
         this.board[0][i] == player &&
@@ -43,7 +43,7 @@ export class TicTacToe {
     ) {
       return player;
     }
-    return "";
+    return this.board.flat().includes("") ? "" : "D";
   }
 
   public play([x, y]: [number, number]): TicTacToe {
