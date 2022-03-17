@@ -60,7 +60,7 @@ describe("TicTacToe", () => {
       .play([0, 0])
       .play([1, 0])
       .play([1, 1])
-      .play([1, 0])
+      .play([2, 0])
       .play([2, 2]);
     expect(res.winner).toEqual("X");
   });
@@ -85,5 +85,20 @@ describe("TicTacToe", () => {
       ["", "", ""],
       ["", "", ""],
     ]);
+  });
+
+  it("Return a draw if the board is full and there is no winner", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play([0, 0])
+      .play([0, 1])
+      .play([0, 2])
+      .play([1, 1])
+      .play([1, 0])
+      .play([1, 2])
+      .play([2, 1])
+      .play([2, 0])
+      .play([2, 2]);
+    expect(res.winner).toEqual("D");
   });
 });

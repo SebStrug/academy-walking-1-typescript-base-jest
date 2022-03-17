@@ -35,19 +35,21 @@ export class TicTacToe {
       ) {
         return player;
       }
-
-      if (
-        this.board[i][i] == player &&
-        this.board[i][i] == player &&
-        this.board[i][i] == player
-      ) {
-        return player;
-      }
+    }
+    if (
+      this.board[0][0] == player &&
+      this.board[1][1] == player &&
+      this.board[2][2] == player
+    ) {
+      return player;
     }
     return "";
   }
 
   public play([x, y]: [number, number]): TicTacToe {
+    if (this.board[x][y]) {
+      return this;
+    }
     this.board[x][y] = this.move;
     this.winner = this.checkWinner(this.move);
     this.move = this.move === "X" ? "O" : "X";
