@@ -28,6 +28,14 @@ export class TicTacToe {
       ) {
         this.winner = "X";
       }
+
+      if (
+        this.board[i][0] == "X" &&
+        this.board[i][1] == "X" &&
+        this.board[i][2] == "X"
+      ) {
+        this.winner = "X";
+      }
     }
     this.move = this.move === "X" ? "O" : "X";
     return this;
