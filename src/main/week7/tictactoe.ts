@@ -41,7 +41,9 @@ export class Board {
     ["", "", ""],
   ];
 
-  place(move: Move, counter: Counter) {
+  place(move: Move, counter: Counter): void {
+    const currentPosition = this.state[move.row][move.column];
+    if (currentPosition) throw new Error("Position is filled");
     this.state[move.row][move.column] = counter.value;
   }
 
@@ -97,7 +99,13 @@ export class TicTacToe {
   winner: null | Counter = null;
 
   play(move: Move): TicTacToe {
-    this.board.place(move, this.counter);
+    if (this.winner) return this;
+
+    try {
+      this.board.place(move, this.counter);
+    } catch (err: any) {
+      return this;
+    }
     if (this.board.checkWinner(this.counter)) {
       this.winner = this.counter;
       return this;

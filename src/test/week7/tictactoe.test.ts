@@ -119,4 +119,36 @@ describe("TicTacToe", () => {
     ]);
     expect(res.winner?.value).toEqual("X");
   });
+
+  it("Playing in the same space should not alter the game", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play(new Move(0, 0))
+      .play(new Move(0, 0))
+      .play(new Move(0, 1));
+
+    expect(res.board.state).toEqual([
+      ["X", "O", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ]);
+  });
+
+  it("Should not be able to play after the game has been won", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play(new Move(0, 0))
+      .play(new Move(2, 0))
+      .play(new Move(0, 1))
+      .play(new Move(2, 1))
+      .play(new Move(0, 2))
+      .play(new Move(2, 2));
+
+    expect(res.board.state).toEqual([
+      ["X", "X", "X"],
+      ["", "", ""],
+      ["O", "O", ""],
+    ]);
+    expect(res.winner?.value).toEqual("X");
+  });
 });
