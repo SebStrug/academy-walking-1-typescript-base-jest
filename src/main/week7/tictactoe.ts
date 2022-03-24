@@ -49,17 +49,14 @@ export class Board {
     ["", "", ""],
   ];
 
-  place(move: Move, counter: Counter): void {
+  place(move: Coordinate, counter: Counter): void {
     const currentPosition = this.state[move.row][move.column];
     if (currentPosition) throw new Error("Position is filled");
     this.state[move.row][move.column] = counter.value;
   }
 
-  isFull() {
-    return !this.state.flat().includes("");
-  }
-
-  checkWinner(counter: Counter): boolean {
+  checkWinner(counter: Counter): Result {
+    if (this.isFull()) return new Result("D");
     let hasWon = false;
     for (let index = 0; index < 3; index++) {
       hasWon =
@@ -68,7 +65,12 @@ export class Board {
         this.checkRow(index, counter) ||
         this.checkDiagonally(counter);
     }
-    return hasWon;
+    if (hasWon) return new Result(counter.value);
+    return new Result("");
+  }
+
+  private isFull() {
+    return !this.state.flat().includes("");
   }
 
   checkColumn(column: number, counter: Counter): boolean {
@@ -96,7 +98,7 @@ export class Board {
   }
 }
 
-export class Move {
+export class Coordinate {
   row: number;
   column: number;
   constructor(row: number, column: number) {
@@ -110,7 +112,7 @@ export class TicTacToe {
   counter: Counter = new Counter();
   result: Result = new Result();
 
-  play(move: Move): TicTacToe {
+  play(move: Coordinate): TicTacToe {
     if (this.result.value) return this;
 
     try {
@@ -119,15 +121,10 @@ export class TicTacToe {
       return this;
     }
 
-    if (this.board.checkWinner(this.counter)) {
-      this.result = new Result(this.counter.value);
-      return this;
-    }
+    this.result = this.board.checkWinner(this.counter);
 
-    this.counter.next();
-
-    if (this.board.isFull()) {
-      this.result = new Result("D");
+    if (!this.result.value) {
+      this.counter.next();
     }
 
     return this;
