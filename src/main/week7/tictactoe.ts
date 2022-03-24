@@ -30,7 +30,7 @@ class Counter {
   }
 }
 
-class Board {
+export class Board {
   state: [
     [string, string, string],
     [string, string, string],
@@ -42,7 +42,7 @@ class Board {
   ];
 
   set(move: Move, counter: Counter) {
-    this.state[move.column][move.row] = counter.value;
+    this.state[move.row][move.column] = counter.value;
   }
 }
 

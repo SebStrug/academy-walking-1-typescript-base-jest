@@ -14,8 +14,21 @@ describe("TicTacToe", () => {
     let sut = new TicTacToe();
     let res = sut.play(new Move(0, 0)).play(new Move(0, 1));
     expect(res.board.state).toEqual([
-      ["X", "", ""],
-      ["O", "", ""],
+      ["X", "O", ""],
+      ["", "", ""],
+      ["", "", ""],
+    ]);
+  });
+
+  it("Playing third move should play X", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play(new Move(0, 0))
+      .play(new Move(0, 1))
+      .play(new Move(0, 2));
+    expect(res.board.state).toEqual([
+      ["X", "O", "X"],
+      ["", "", ""],
       ["", "", ""],
     ]);
   });
