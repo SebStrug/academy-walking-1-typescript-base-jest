@@ -48,10 +48,12 @@ export class Board {
   checkWinner(counter: Counter): boolean {
     let hasWon = false;
     for (let index = 0; index < 3; index++) {
-      hasWon = this.checkColumn(index, counter);
-      if (hasWon) return true;
+      hasWon =
+        hasWon ||
+        this.checkColumn(index, counter) ||
+        this.checkRow(index, counter);
     }
-    return false;
+    return hasWon;
   }
 
   checkColumn(column: number, counter: Counter): boolean {
@@ -59,6 +61,14 @@ export class Board {
       this.state[0][column] == counter.value &&
       this.state[1][column] == counter.value &&
       this.state[2][column] == counter.value
+    );
+  }
+
+  checkRow(row: number, counter: Counter): boolean {
+    return (
+      this.state[row][0] == counter.value &&
+      this.state[row][1] == counter.value &&
+      this.state[row][2] == counter.value
     );
   }
 }
