@@ -44,6 +44,23 @@ export class Board {
   set(move: Move, counter: Counter) {
     this.state[move.row][move.column] = counter.value;
   }
+
+  checkWinner(counter: Counter): boolean {
+    let hasWon = false;
+    for (let index = 0; index < 3; index++) {
+      hasWon = this.checkColumn(index, counter);
+      if (hasWon) return true;
+    }
+    return false;
+  }
+
+  checkColumn(column: number, counter: Counter): boolean {
+    return (
+      this.state[0][column] == counter.value &&
+      this.state[1][column] == counter.value &&
+      this.state[2][column] == counter.value
+    );
+  }
 }
 
 export class Move {
@@ -58,9 +75,14 @@ export class Move {
 export class TicTacToe {
   board: Board = new Board();
   counter: Counter = new Counter();
+  winner: null | Counter = null;
 
   play(move: Move): TicTacToe {
     this.board.set(move, this.counter);
+    if (this.board.checkWinner(this.counter)) {
+      this.winner = this.counter;
+      return this;
+    }
     this.counter.next();
     return this;
   }
