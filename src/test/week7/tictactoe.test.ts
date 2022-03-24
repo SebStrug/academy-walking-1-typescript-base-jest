@@ -102,4 +102,21 @@ describe("TicTacToe", () => {
     ]);
     expect(res.winner?.value).toEqual("O");
   });
+
+  it("Playing 3 of the same counter diagonally should result in a win (X)", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play(new Move(0, 0))
+      .play(new Move(1, 0))
+      .play(new Move(1, 1))
+      .play(new Move(2, 0))
+      .play(new Move(2, 2));
+
+    expect(res.board.state).toEqual([
+      ["X", "", ""],
+      ["O", "X", ""],
+      ["O", "", "X"],
+    ]);
+    expect(res.winner?.value).toEqual("X");
+  });
 });

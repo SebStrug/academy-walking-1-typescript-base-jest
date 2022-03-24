@@ -41,7 +41,7 @@ export class Board {
     ["", "", ""],
   ];
 
-  set(move: Move, counter: Counter) {
+  place(move: Move, counter: Counter) {
     this.state[move.row][move.column] = counter.value;
   }
 
@@ -51,7 +51,8 @@ export class Board {
       hasWon =
         hasWon ||
         this.checkColumn(index, counter) ||
-        this.checkRow(index, counter);
+        this.checkRow(index, counter) ||
+        this.checkDiagonally(counter);
     }
     return hasWon;
   }
@@ -71,6 +72,14 @@ export class Board {
       this.state[row][2] == counter.value
     );
   }
+
+  checkDiagonally(counter: Counter): boolean {
+    return (
+      this.state[0][0] == counter.value &&
+      this.state[1][1] == counter.value &&
+      this.state[2][2] == counter.value
+    );
+  }
 }
 
 export class Move {
@@ -88,7 +97,7 @@ export class TicTacToe {
   winner: null | Counter = null;
 
   play(move: Move): TicTacToe {
-    this.board.set(move, this.counter);
+    this.board.place(move, this.counter);
     if (this.board.checkWinner(this.counter)) {
       this.winner = this.counter;
       return this;
