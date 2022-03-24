@@ -47,7 +47,7 @@ describe("TicTacToe", () => {
       ["X", "O", ""],
       ["X", "", ""],
     ]);
-    expect(res.winner?.value).toEqual("X");
+    expect(res.result.value).toEqual("X");
   });
 
   it("Playing 3 of the same counter in a column should result in a win (O)", () => {
@@ -65,7 +65,7 @@ describe("TicTacToe", () => {
       ["X", "O", ""],
       ["", "O", ""],
     ]);
-    expect(res.winner?.value).toEqual("O");
+    expect(res.result.value).toEqual("O");
   });
 
   it("Playing 3 of the same counter in a row should result in a win (X)", () => {
@@ -82,7 +82,7 @@ describe("TicTacToe", () => {
       ["O", "", ""],
       ["O", "", ""],
     ]);
-    expect(res.winner?.value).toEqual("X");
+    expect(res.result.value).toEqual("X");
   });
 
   it("Playing 3 of the same counter in a row should result in a win (O)", () => {
@@ -100,7 +100,7 @@ describe("TicTacToe", () => {
       ["O", "O", "O"],
       ["", "", "X"],
     ]);
-    expect(res.winner?.value).toEqual("O");
+    expect(res.result.value).toEqual("O");
   });
 
   it("Playing 3 of the same counter diagonally should result in a win (X)", () => {
@@ -117,7 +117,7 @@ describe("TicTacToe", () => {
       ["O", "X", ""],
       ["O", "", "X"],
     ]);
-    expect(res.winner?.value).toEqual("X");
+    expect(res.result.value).toEqual("X");
   });
 
   it("Playing in the same space should not alter the game", () => {
@@ -149,6 +149,27 @@ describe("TicTacToe", () => {
       ["", "", ""],
       ["O", "O", ""],
     ]);
-    expect(res.winner?.value).toEqual("X");
+    expect(res.result.value).toEqual("X");
+  });
+
+  it("Should return a draw if the game has no more moves", () => {
+    let sut = new TicTacToe();
+    let res = sut
+      .play(new Move(0, 0))
+      .play(new Move(0, 1))
+      .play(new Move(0, 2))
+      .play(new Move(1, 1))
+      .play(new Move(1, 0))
+      .play(new Move(1, 2))
+      .play(new Move(2, 1))
+      .play(new Move(2, 0))
+      .play(new Move(2, 2));
+
+    expect(res.board.state).toEqual([
+      ["X", "O", "X"],
+      ["X", "O", "O"],
+      ["O", "X", "X"],
+    ]);
+    expect(res.result.value).toEqual("D");
   });
 });

@@ -30,6 +30,14 @@ class Counter {
   }
 }
 
+class Result {
+  value: "" | "X" | "O" | "D" = "";
+
+  constructor(value: "" | "X" | "O" | "D" = "") {
+    this.value = value;
+  }
+}
+
 export class Board {
   state: [
     [string, string, string],
@@ -45,6 +53,10 @@ export class Board {
     const currentPosition = this.state[move.row][move.column];
     if (currentPosition) throw new Error("Position is filled");
     this.state[move.row][move.column] = counter.value;
+  }
+
+  isFull() {
+    return !this.state.flat().includes("");
   }
 
   checkWinner(counter: Counter): boolean {
@@ -96,21 +108,28 @@ export class Move {
 export class TicTacToe {
   board: Board = new Board();
   counter: Counter = new Counter();
-  winner: null | Counter = null;
+  result: Result = new Result();
 
   play(move: Move): TicTacToe {
-    if (this.winner) return this;
+    if (this.result.value) return this;
 
     try {
       this.board.place(move, this.counter);
     } catch (err: any) {
       return this;
     }
+
     if (this.board.checkWinner(this.counter)) {
-      this.winner = this.counter;
+      this.result = new Result(this.counter.value);
       return this;
     }
+
     this.counter.next();
+
+    if (this.board.isFull()) {
+      this.result = new Result("D");
+    }
+
     return this;
   }
 }
